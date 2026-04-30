@@ -16,29 +16,40 @@ class OrderController extends Controller
             'total' => 'nullable|numeric',
         ]);
 
+        // 1️⃣ إنشاء order
         $order = Order::create([
             'user_id' => Auth::id(),
-            'items' => $request->items, // مصفوفة JSON فيها المنتجات + toppings + side options
-            'total' => $request->total,
+            'total' => $request->total ?? 0,
             'taxes' => $request->taxes ?? 0,
             'delivery_fees' => $request->delivery_fees ?? 0,
-            'payment_method' => $request->payment_method ?? null,
+            'payment_method' => $request->payment_method,
             'save_card' => $request->save_card ?? false,
-            'transaction_id' => $request->transaction_id ?? null,
-            'estimated_delivery_time' => $request->estimated_delivery_time ?? null,
+            'transaction_id' => $request->transaction_id,
+            'estimated_delivery_time' => $request->estimated_delivery_time,
         ]);
+
+        // 2️⃣ حفظ items في order_items
+        foreach ($request->items as $item) {
+            $order->items()->create([
+                'product_id' => $item['product_id'],
+                'quantity' => $item['quantity'],
+                'spicy' => $item['spicy'] ?? 0,
+            ]);
+        }
 
         return response()->json([
             'status' => true,
             'message' => 'Order saved successfully',
-            'order' => $order,
+            'order' => $order->load('items'),
         ], 201);
     }
 
-    // 🟢 جلب كل الطلبات الخاصة بالمستخدم
+    // 🟢 كل الطلبات
     public function index()
     {
-        $orders = Order::where('user_id', Auth::id())->get();
+        $orders = Order::with('items')
+            ->where('user_id', Auth::id())
+            ->get();
 
         return response()->json([
             'status' => true,
@@ -46,10 +57,12 @@ class OrderController extends Controller
         ]);
     }
 
-    // 🟢 جلب تفاصيل طلب معين
+    // 🟢 تفاصيل طلب واحد
     public function show($id)
     {
-        $order = Order::where('user_id', Auth::id())->findOrFail($id);
+        $order = Order::with('items')
+            ->where('user_id', Auth::id())
+            ->findOrFail($id);
 
         return response()->json([
             'status' => true,

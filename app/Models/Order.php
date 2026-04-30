@@ -11,8 +11,6 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
-        'items',
-        'order',
         'taxes',
         'delivery_fees',
         'total',
@@ -23,7 +21,12 @@ class Order extends Model
     ];
 
     protected $casts = [
-        'items' => 'array',
         'save_card' => 'boolean',
     ];
+
+    // 🟢 relation
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 }
