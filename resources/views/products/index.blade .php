@@ -1,3 +1,8 @@
+@extends('layouts.app')
+
+@section('title', 'Add Product')
+
+@section('content')
 <h1>products List</h1>
 
 @if(session('success'))
@@ -11,3 +16,4 @@
 </ul>
 
 <a href="{{ route('products.create') }}">Add New Category</a>
+@endsection
