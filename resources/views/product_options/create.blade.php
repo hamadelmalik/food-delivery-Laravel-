@@ -67,20 +67,7 @@
     </form>
 </div>
 
-@foreach($types as $type)
-    <h3 class="font-bold mt-4">
-        {{ $type->name }}
-    </h3>
 
-    <div class="flex flex-wrap gap-2 ml-4">
-        @foreach($type->productOptions as $option)
-            <div class="border px-3 py-1 rounded">
-                {{ $option->name }}
-            </div>
-        @endforeach
-    </div>
-
-@endforeach
 <script>
 let optionIndex = 1;
 

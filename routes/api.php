@@ -31,7 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/cart/add', [CartController::class, 'add']);
     Route::put('/cart/update/{id}', [CartController::class, 'update']);
     Route::delete('/cart/remove/{id}', [CartController::class, 'remove']);
-    Route::delete('/cart/clear', [CartController::class, 'clear']);
+   Route::delete('/cart/clear', [CartController::class, 'clear']);
 
     // 🟢 Product Options
     Route::post('/options', [ProductOptionController::class, 'store']);

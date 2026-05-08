@@ -1,4 +1,14 @@
+@extends('layouts.dashboard')
+
+@section('content')
+
 <h1>Add New Product</h1>
+
+@if(session('success'))
+    <div style="color:green; font-weight:bold;">
+        {{ session('success') }}
+    </div>
+@endif
 
 <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
@@ -24,9 +34,7 @@
     <input type="file" name="image"><br><br>
 
     <button type="submit">Save</button>
-    @if(session('success'))
-    <div style="color:green; font-weight:bold;">
-        {{ session('success') }}
-    </div>
-@endif
+
 </form>
+
+@endsection
