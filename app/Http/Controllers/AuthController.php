@@ -40,7 +40,7 @@ class AuthController extends Controller
     }
 
     // 🟢 Login
-   public function login(Request $request)
+ public function login(Request $request)
 {
     $request->validate([
         'email' => 'required|email',
@@ -48,13 +48,16 @@ class AuthController extends Controller
     ]);
 
     if (!auth()->attempt($request->only('email', 'password'))) {
+
         return response()->json([
             'status' => false,
             'message' => 'Invalid email or password'
         ], 401);
+
     }
 
     $user = auth()->user();
+
     $token = $user->createToken('auth_token')->plainTextToken;
 
     return response()->json([
@@ -62,7 +65,18 @@ class AuthController extends Controller
         'message' => 'Login successful',
         'access_token' => $token,
         'token_type' => 'Bearer',
-        'user' => $user
+
+        'user' => [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'address' => $user->address ?? '',
+            'visa' => $user->visa ?? '',
+            'image' => $user->image
+                ? url('storage/' . $user->image)
+                : url('storage/uploadimages/default.jpg'),
+        ]
+
     ], 200);
 }
 // 🟢 Get Profile

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OptionTypeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductOptionController;
+use App\Http\Controllers\BackupController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +25,12 @@ Route::post('/product-options/store', [ProductOptionController::class, 'store'])
 Route::resource('option-types', OptionTypeController::class);
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
+    //backup---
+    Route::get('/backup',
+[BackupController::class,'index'])
+->name('backup.index');
+
+
+Route::post('/backup/create',
+[BackupController::class,'create'])
+->name('backup.create');

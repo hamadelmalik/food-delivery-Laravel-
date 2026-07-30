@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 use App\Http\Resources\ProductResource;
 
 
-
-
 class ProductController extends Controller
 {
     public function index()
@@ -76,31 +74,6 @@ class ProductController extends Controller
     }
 
     return "All image paths fixed correctly!";
-}
-public function getSideOptions()
-{
-    $options = SideOption::all()->map(function ($item) {
-        $item->image = asset('storage/' . $item->image);
-        return $item;
-    });
-
-    return response()->json([
-        'status' => true,
-        'data' => $options
-    ]);
-}
-
-public function getToppings()
-{
-    $toppings = Topping::all()->map(function ($item) {
-        $item->image = asset('storage/' . $item->image);
-        return $item;
-    });
-
-    return response()->json([
-        'status' => true,
-        'data' => $toppings
-    ]);
 }
 
 

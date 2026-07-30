@@ -137,8 +137,81 @@
 
     </form>
 
-</div>
 
+</div>
+<!-- Display Product Options -->
+
+@php
+use Illuminate\Support\Facades\DB;
+
+$options = DB::table('product_options as po')
+    ->join('option_types as ot', 'po.type_id', '=', 'ot.id')
+    ->select(
+        'po.id',
+        'po.name',
+        'po.price',
+        'po.image',
+        'ot.name as type_name'
+    )
+    ->orderBy('po.id', 'desc')
+    ->get()
+    ->groupBy('type_name');
+@endphp
+
+
+<div class="mt-10">
+
+
+@foreach($options as $type => $items)
+
+    <div class="mb-8">
+
+        <h3 class="text-xl font-bold mb-4">
+            {{ ucfirst($type) }}
+        </h3>
+
+
+        <div class="grid grid-cols-4 gap-4">
+
+
+            @foreach($items as $option)
+
+            <div class="bg-white shadow rounded-xl p-4 text-center">
+
+
+                @if($option->image)
+
+                <img
+                src="{{ asset('storage/'.$option->image) }}"
+                class="w-20 h-20 mx-auto rounded-full object-cover mb-3">
+
+                @endif
+
+
+                <h4 class="font-bold">
+                    {{ $option->name }}
+                </h4>
+
+
+                <p class="text-green-600 font-bold">
+                    {{ $option->price }}
+                </p>
+
+
+            </div>
+
+            @endforeach
+
+
+        </div>
+
+    </div>
+
+
+@endforeach
+
+
+</div>
 <!-- JavaScript -->
 <script>
 
