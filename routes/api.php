@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductOptionController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OptionTypeController;
+use App\Http\Controllers\MenuItemController; //
 
 // ====================================
 // Routes محمية بالمصادقة (Sanctum)
@@ -54,3 +55,6 @@ Route::apiResource('products', ProductController::class)->only(['index', 'store'
 Route::get('/option-types-new', [OptionTypeController::class, 'indexnew']);
 Route::get('/options', [ProductOptionController::class, 'getOptions']);
 Route::get('/options-new', [ProductOptionController::class, 'getOptionsnew']);
+
+// 🟢 menu items
+Route::get('/menu-items', [MenuItemController::class, 'index']);
