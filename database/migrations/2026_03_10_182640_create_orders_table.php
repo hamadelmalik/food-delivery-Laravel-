@@ -21,7 +21,6 @@ return new class extends Migration
     $table->decimal('delivery_fees', 8, 2)->default(0);
     $table->decimal('total', 8, 2);
     $table->string('payment_method')->nullable();
-    $table->boolean('save_card')->default(false);
     $table->string('transaction_id')->nullable();
     $table->string('estimated_delivery_time')->nullable();
     $table->timestamps();

@@ -30,5 +30,11 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-
+ 'kashier' => [
+    'session_url' => env('KASHIER_PAYMENT_URL'),
+    'merchant_id' => env('KASHIER_MERCHANT_ID'),
+    'auth_secret' => env('KASHIER_SECRET_KEY'),
+    'api_key' => env('KASHIER_API_KEY'),
+    'redirect_url' => env('KASHIER_REDIRECT_URL'),
+],
 ];

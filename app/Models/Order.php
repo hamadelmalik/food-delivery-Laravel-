@@ -2,29 +2,28 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'user_id',
+        'total',
         'taxes',
         'delivery_fees',
-        'total',
         'payment_method',
-        'save_card',
         'transaction_id',
         'estimated_delivery_time',
+        'status',
     ];
 
     protected $casts = [
-        'save_card' => 'boolean',
+
+        'total' => 'double',
+        'taxes' => 'double',
+        'delivery_fees' => 'double',
     ];
 
-    // 🟢 relation
     public function items()
     {
         return $this->hasMany(OrderItem::class);

@@ -13,18 +13,28 @@ class OrderItem extends Model
         'order_id',
         'product_id',
         'quantity',
+        'base_price',
+        'option_type_id',
+        'option_id',
+        'option_price',
+        'total_price',
         'spicy',
     ];
 
-    // 🟢 العلاقة مع Order
-    public function order()
-    {
-        return $this->belongsTo(Order::class);
-    }
+    protected $casts = [
+        'base_price' => 'double',
+        'option_price' => 'double',
+        'total_price' => 'double',
+        'spicy' => 'double',
+    ];
 
-    // 🟢 العلاقة مع Product
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
+    public function optionType()
+{
+    return $this->belongsTo(\App\Models\OptionType::class, 'option_type_id');
+}
+
+public function option()
+{
+    return $this->belongsTo(\App\Models\ProductOption::class, 'option_id');
+}
 }

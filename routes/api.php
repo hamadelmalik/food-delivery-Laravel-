@@ -9,7 +9,7 @@ use App\Http\Controllers\ProductOptionController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OptionTypeController;
 use App\Http\Controllers\MenuItemController; //
-
+use App\Http\Controllers\PaymentController;
 // ====================================
 // Routes محمية بالمصادقة (Sanctum)
 // ====================================
@@ -39,9 +39,15 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // 🟢 Logout
     Route::post('/logout', [AuthController::class, 'logout']);
-});
 
+});
 // ====================================
+// 🟢 Payment
+// ====================================
+
+Route::post('/payment/create', [PaymentController::class, 'createPayment']);
+Route::get('/payment/callback', [PaymentController::class, 'paymentCallback']);
+Route::get('/ping', fn () => 'API OK');// ====================================
 // Public Routes (غير محمية)
 // ====================================
 Route::post('/register', [AuthController::class, 'register']);

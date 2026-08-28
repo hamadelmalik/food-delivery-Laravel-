@@ -34,3 +34,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 Route::post('/backup/create',
 [BackupController::class,'create'])
 ->name('backup.create');
+
+Route::get('/test-payment', function () {
+    return view('payment.test-payment');
+});
