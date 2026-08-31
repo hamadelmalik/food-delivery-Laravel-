@@ -10,6 +10,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OptionTypeController;
 use App\Http\Controllers\MenuItemController; //
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\KashierController;
 // ====================================
 // Routes محمية بالمصادقة (Sanctum)
 // ====================================
@@ -48,7 +49,12 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/payment/create', [PaymentController::class, 'createPayment']);
 Route::get('/payment/callback', [PaymentController::class, 'paymentCallback']);
 Route::get('/ping', fn () => 'API OK');// ====================================
-// Public Routes (غير محمية)
+// kashir
+Route::post('/kashier/payment', [
+    KashierController::class,
+    'createPayment'
+]);
+Route::any('/payment/callback', [KashierController::class, 'paymentCallback']);
 // ====================================
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
